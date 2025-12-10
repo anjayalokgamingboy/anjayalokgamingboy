@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir Konfirmasi Pembayaran Helga Market</title>
+    <style>
+        /* CSS Dasar untuk Tampilan (Sama seperti sebelumnya) */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 700px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        h2, h3 { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 20px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .payment-methods { border: 1px dashed #ddd; padding: 15px; margin-bottom: 20px; border-radius: 4px; background-color: #fafafa; }
+        .payment-methods strong { display: block; margin-bottom: 10px; color: #555; }
+        .btn-submit {
+            background-color: #28a745; /* Warna hijau untuk WhatsApp */
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-submit:hover { background-color: #218838; }
+        /* Tambahkan ikon WhatsApp sederhana */
+        .whatsapp-icon::before { content: '💬'; margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🧾 Formulir Konfirmasi Pembayaran Helga Market</h2>
+    <p>Silakan isi detail pembayaran Anda di bawah ini, lalu kirimkan melalui tombol WhatsApp di akhir form.</p>
+
+    <form id="paymentForm" action="#"> 
+
+        <h3>1. Detail Pemesan & Pesanan</h3>
+
+        <label for="nama_lengkap">Nama Lengkap</label>
+        <input type="text" id="nama_lengkap" name="nama_lengkap" required>
+
+        <label for="wa_aktif">Nomor WhatsApp Aktif</label>
+        <input type="text" id="wa_aktif" name="wa_aktif" placeholder="Cth: 628xxxxxxxxxx (Tanpa tanda +)" required>
+
+        <label for="id_pesanan">ID Pesanan / Nama Barang</label>
+        <input type="text" id="id_pesanan" name="id_pesanan" required>
+
+        <label for="total_bayar">Total Pembayaran (Rp)</label>
+        <input type="number" id="total_bayar" name="total_bayar" required>
+        
+        <h3>2. Pilihan Metode Pembayaran (Target Transfer)</h3>
+        <div class="payment-methods">
+            <strong>Pilih salah satu metode untuk Anda transfer:</strong>
+            
+            <h4>📱 E-Wallet/QRIS</h4>
+            <p><strong>QRIS:</strong>  <img class="img-fluid" src="images/images/IMG_7703.jpeg" alt="alternative"> </p>
+            <p><strong>DANA:</strong> 081398860278</p>
+            <p><strong>OVO:</strong> 081398860278</p>
+            <p><strong>ShopeePay:</strong> 082138919347</p>
+            
+            <h4>🏦 Transfer Bank</h4>
+            <p><strong>BCA:</strong> 3201345357 a.n. Helga Nur Ilham</p>
+            <p><strong>SeaBank:</strong> 901951965300 a.n. Helga Nur Ilham</p>
+        </div>
+
+
+        <h3>3. Detail Konfirmasi Transfer</h3>
+
+        <label for="metode_dipilih">Metode Pembayaran yang Dipilih (Target Transfer Anda)</label>
+        <select id="metode_dipilih" name="metode_dipilih" required>
+            <option value="">-- Pilih --</option>
+            <option value="QRIS/Jago">QRIS</option>
+            <option value="DANA">DANA</option>
+            <option value="OVO">OVO</option>
+            <option value="ShopeePay">ShopeePay</option>
+            <option value="BCA">BCA</option>
+            <option value="Mandiri">Mandiri</option>
+        </select>
+        
+        <label for="nama_pengirim">Nama Akun/Rekening Pengirim Dana</label>
+        <input type="text" id="nama_pengirim" name="nama_pengirim" required>
+
+        <label for="waktu_transfer">Waktu Transfer (Perkiraan)</label>
+        <input type="text" id="waktu_transfer" name="waktu_transfer" placeholder="Cth: 15:30 WIB" required>
+
+        <label for="bukti_pembayaran">Link Bukti Pembayaran (Wajib)</label>
+        <input type="text" id="bukti_pembayaran" name="bukti_pembayaran" placeholder="Tempel URL (misal: Google Drive/Imgur/URL lain)" required>
+
+        <label for="catatan">Catatan Tambahan (Opsional)</label>
+        <textarea id="catatan" name="catatan" rows="3"></textarea>
+        
+        <button type="submit" class="btn-submit"><span class="whatsapp-icon"></span> Kirim Konfirmasi via WhatsApp</button>
+        
+    </form>
+
+    <p style="text-align: center; margin-top: 20px; font-size: small;">*Anda akan diarahkan ke WhatsApp untuk mengirimkan detail ini.</p>
+</div>
+
+<script>
+    // ************************************************
+    //           PENTING: UBAH NOMOR INI
+    // ************************************************
+    const whatsappNumber = "6285745854364"; // Ganti dengan nomor WA Anda (Format: 628... tanpa tanda + atau 0)
+
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah form melakukan submit default
+
+        // 1. Ambil semua data dari form
+        const namaLengkap = document.getElementById('nama_lengkap').value;
+        const waAktif = document.getElementById('wa_aktif').value;
+        const idPesanan = document.getElementById('id_pesanan').value;
+        const totalBayar = document.getElementById('total_bayar').value;
+        const metodeDipilih = document.getElementById('metode_dipilih').value;
+        const namaPengirim = document.getElementById('nama_pengirim').value;
+        const waktuTransfer = document.getElementById('waktu_transfer').value;
+        const buktiPembayaran = document.getElementById('bukti_pembayaran').value;
+        const catatan = document.getElementById('catatan').value;
+
+        // 2. Susun teks pesan WhatsApp
+        let message = `*KONFIRMASI PEMBAYARAN HELGA MARKET*
+        
+*Detail Pesanan:*
+Nama Pelanggan: ${namaLengkap}
+Nomor WA Aktif: ${waAktif}
+ID Pesanan/Barang: ${idPesanan}
+Total Pembayaran: Rp ${totalBayar}
+        
+*Detail Transfer:*
+Transfer Ke: ${metodeDipilih}
+Nama Pengirim: ${namaPengirim}
+Waktu Transfer: ${waktuTransfer}
+        
+*Bukti Pembayaran:*
+${buktiPembayaran}
+        
+*Catatan Tambahan:*
+${catatan || '(Tidak ada catatan)'}
+        
+Terima kasih, mohon segera diproses.`;
+
+        // 3. Encode pesan agar aman untuk URL dan ganti baris dengan %0A
+        const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0A');
+
+        // 4. Buat URL WhatsApp
+        const whatsappURL = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+
+        // 5. Arahkan pengguna ke WhatsApp
+        window.open(whatsappURL, '_blank');
+        
+        // Opsional: Reset form setelah data disiapkan
+        // document.getElementById('paymentForm').reset();
+    });
+</script>
+</body>
+</html>
